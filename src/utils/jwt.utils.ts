@@ -7,7 +7,7 @@ export const signJWT = (role: string, id: string): Promise<string> => {
         role,
         id,
       },
-      process.env.JWT_SECRET_KEY,
+      process.env?.JWT_SECRET_KEY ?? "",
       {
         expiresIn: "12h",
       },
@@ -30,19 +30,24 @@ export const verifyJWT = (
   token: string
 ): Promise<{ valid: boolean; data?: { id: string; role: string } }> => {
   return new Promise((resolve, reject) => {
-    jwt.verify(token, process.env.JWT_SECRET_KEY, {}, (error, decoded: any) => {
-      if (error) {
-        return reject({
-          valid: false,
+    jwt.verify(
+      token,
+      process.env?.JWT_SECRET_KEY ?? "",
+      {},
+      (error: any, decoded: any) => {
+        if (error) {
+          return reject({
+            valid: false,
+          })
+        }
+        return resolve({
+          valid: true,
+          data: {
+            id: decoded.id,
+            role: decoded.role,
+          },
         })
       }
-      return resolve({
-        valid: true,
-        data: {
-          id: decoded.id,
-          role: decoded.role,
-        },
-      })
-    })
+    )
   })
 }

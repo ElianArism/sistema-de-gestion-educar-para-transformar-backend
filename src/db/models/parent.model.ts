@@ -8,6 +8,7 @@ const ParentSchema = new Schema<IParent>(
     ...UserSchema,
     son: {
       type: Schema.Types.ObjectId,
+      ref: "Students",
       required: true,
     },
   },

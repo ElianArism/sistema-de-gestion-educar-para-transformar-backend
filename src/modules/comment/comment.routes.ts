@@ -7,11 +7,11 @@ import {
   getComments,
 } from "./comment.controller"
 
-export const router = Router()
+export const commentRoutes = Router()
 
-router.get("/", [], getComments)
-router.get("/:id", [], getCommentById)
-router.get("/:id", [], deleteComment)
-router.get("/", createCommentValidations, createComment)
+commentRoutes.get("/", [], getComments)
+commentRoutes.get("/:id", [], getCommentById)
+commentRoutes.get("/:id", [], deleteComment)
+commentRoutes.get("/", createCommentValidations, createComment)
 
-export default router
+export default commentRoutes

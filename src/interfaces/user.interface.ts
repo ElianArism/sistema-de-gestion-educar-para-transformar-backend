@@ -1,6 +1,7 @@
+import { Types } from "mongoose"
 import { AvailableRoles } from "../enums/roles.enum"
 
-export interface IUser {
+export interface IUser extends Document {
   id: string
   name: string
   lastName: string
@@ -19,5 +20,5 @@ export interface IStudent extends IUser {
 }
 
 export interface IParent extends IUser {
-  son: IStudent
+  son: Types.ObjectId
 }

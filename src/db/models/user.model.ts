@@ -1,37 +1,28 @@
-import { Schema } from "mongoose"
-import { IUser } from "../../interfaces/user.interface"
-
-const UserSchema: Schema<IUser> = new Schema<IUser>(
-  {
-    id: {
-      type: String,
-      required: true,
-      unique: true,
-      auto: false,
-    },
-    birthDate: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
+const UserSchema = {
+  id: {
+    type: String,
+    required: true,
+    unique: true,
   },
-  {
-    _id: false,
-  }
-)
+  birthDate: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+}
 
 export default UserSchema

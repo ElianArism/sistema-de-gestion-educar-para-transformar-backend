@@ -23,19 +23,19 @@ import {
   updateStudent,
 } from "./user.controller"
 
-const router = Router()
+const userRoutes = Router()
 
-router.get("/all/:role", [], getAllUsers)
-router.get("/:role/:id", [], getUserById)
-router.delete("/:role/:id", [], deleteUser)
-router.put("/update-password", [validateJWT], updatePassword)
+userRoutes.get("/all/:role", [], getAllUsers)
+userRoutes.get("/:role/:id", [], getUserById)
+userRoutes.delete("/:role/:id", [], deleteUser)
+userRoutes.put("/update-password", [validateJWT], updatePassword)
 
-router.put("/professor/:id", updateProfessorValidations, updateProfessor)
-router.put("/student/:id", updateStudentValidations, updateStudent)
-router.put("/parent/:id", updateParentValidations, updateParent)
+userRoutes.put("/professor/:id", updateProfessorValidations, updateProfessor)
+userRoutes.put("/student/:id", updateStudentValidations, updateStudent)
+userRoutes.put("/parent/:id", updateParentValidations, updateParent)
 
-router.post("/professor", createProfessorValidations, createProfessor)
-router.post("/student", createStudentValidations, createStudent)
-router.post("/parent", createParentValidations, createParent)
+userRoutes.post("/professor", createProfessorValidations, createProfessor)
+userRoutes.post("/student", createStudentValidations, createStudent)
+userRoutes.post("/parent", createParentValidations, createParent)
 
-export default router
+export default userRoutes
