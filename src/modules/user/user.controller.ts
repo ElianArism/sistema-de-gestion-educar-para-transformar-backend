@@ -10,6 +10,8 @@ export const createParent = async (req: Request, res: Response) => {
   const parentDTO = req.body as IParent
 
   try {
+    parentDTO.password = encrypt(parentDTO.password)
+    parentDTO.role = AvailableRoles.parent
     const parentExists = await Parent.findOne({ id: parentDTO.id })
 
     if (parentExists) {
@@ -98,6 +100,7 @@ export const createStudent = async (req: Request, res: Response) => {
 
   try {
     studentDTO.password = encrypt(studentDTO.password)
+    studentDTO.role = AvailableRoles.student
     const studentDoc = new Student(studentDTO)
     await studentDoc.save()
 
@@ -167,6 +170,7 @@ export const createProfessor = async (req: Request, res: Response) => {
 
   try {
     professorDTO.password = encrypt(professorDTO.password)
+    professorDTO.role = AvailableRoles.professor
     const professorDoc = new Student(professorDTO)
     await professorDoc.save()
 

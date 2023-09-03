@@ -1,7 +1,10 @@
 import { Router } from "express"
+import { login } from "./auth.controller"
 
-const router = Router()
+const authRoutes = Router()
 
-router.post("/login", [])
-router.get("/renew-session", [])
-router.post("/logout", [])
+authRoutes.post("/login", [], login)
+authRoutes.get("/renew-session", [])
+authRoutes.post("/logout", [])
+
+export default authRoutes

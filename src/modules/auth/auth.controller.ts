@@ -3,6 +3,7 @@ import { AvailableRoles } from "../../enums/roles.enum"
 import { LoginUserDTO } from "../../interfaces/login-user-dto.interface"
 import { isEqualToEcryptedField } from "../../utils/encription.utils"
 import { getUserCollectionByRole } from "../../utils/get-user-repository-by-role"
+import { signJWT } from "../../utils/jwt.utils"
 
 export const login = async (req: Request, res: Response) => {
   const { id, password, role } = req.body as LoginUserDTO
@@ -31,10 +32,9 @@ export const login = async (req: Request, res: Response) => {
     }
 
     if (isEqualToEcryptedField(password, user.password)) {
-      // TODO create JWT
       return res.json({
         ok: true,
-        data: user,
+        data: await signJWT(user.role, user.id),
       })
     } else {
       return res.status(400).json({

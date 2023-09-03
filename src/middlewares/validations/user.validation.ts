@@ -7,7 +7,6 @@ export const userValidations = [
   check("lastName", "lastName is required").isString().not().isEmpty(),
   check("password", "password is required").isString().not().isEmpty(),
   check("birthDate", "birthDate is required").isString().not().isEmpty(),
-  check("role", "role is required").isString().not().isEmpty(),
 ]
 
 export const createProfessorValidations = [
