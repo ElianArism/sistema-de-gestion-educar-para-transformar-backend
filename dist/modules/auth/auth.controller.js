@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.logout = exports.renewSession = exports.login = void 0;
 const encription_utils_1 = require("../../utils/encription.utils");
 const get_user_repository_by_role_1 = require("../../utils/get-user-repository-by-role");
+const jwt_utils_1 = require("../../utils/jwt.utils");
 const login = async (req, res) => {
     const { id, password, role } = req.body;
     try {
@@ -25,10 +26,9 @@ const login = async (req, res) => {
             });
         }
         if ((0, encription_utils_1.isEqualToEcryptedField)(password, user.password)) {
-            // TODO create JWT
             return res.json({
                 ok: true,
-                data: user,
+                data: await (0, jwt_utils_1.signJWT)(user.role, user.id),
             });
         }
         else {

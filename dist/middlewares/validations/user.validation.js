@@ -9,7 +9,6 @@ exports.userValidations = [
     (0, express_validator_1.check)("lastName", "lastName is required").isString().not().isEmpty(),
     (0, express_validator_1.check)("password", "password is required").isString().not().isEmpty(),
     (0, express_validator_1.check)("birthDate", "birthDate is required").isString().not().isEmpty(),
-    (0, express_validator_1.check)("role", "role is required").isString().not().isEmpty(),
 ];
 exports.createProfessorValidations = [
     ...exports.userValidations,

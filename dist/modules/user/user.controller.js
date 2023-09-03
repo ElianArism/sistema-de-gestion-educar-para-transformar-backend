@@ -11,6 +11,8 @@ const get_user_repository_by_role_1 = require("../../utils/get-user-repository-b
 const createParent = async (req, res) => {
     const parentDTO = req.body;
     try {
+        parentDTO.password = (0, encription_utils_1.encrypt)(parentDTO.password);
+        parentDTO.role = "parent" /* AvailableRoles.parent */;
         const parentExists = await parent_model_1.default.findOne({ id: parentDTO.id });
         if (parentExists) {
             return res.status(400).json({
@@ -87,6 +89,7 @@ const createStudent = async (req, res) => {
     const studentDTO = req.body;
     try {
         studentDTO.password = (0, encription_utils_1.encrypt)(studentDTO.password);
+        studentDTO.role = "student" /* AvailableRoles.student */;
         const studentDoc = new student_model_1.default(studentDTO);
         await studentDoc.save();
         return res.json({
@@ -150,6 +153,7 @@ const createProfessor = async (req, res) => {
     const professorDTO = req.body;
     try {
         professorDTO.password = (0, encription_utils_1.encrypt)(professorDTO.password);
+        professorDTO.role = "professor" /* AvailableRoles.professor */;
         const professorDoc = new student_model_1.default(professorDTO);
         await professorDoc.save();
         return res.json({
