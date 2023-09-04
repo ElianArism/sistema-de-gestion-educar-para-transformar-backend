@@ -4,7 +4,7 @@
   "description": "Sistema de gestion para centro educativo educar para transformar ",
   "main": "dist/app.js",
   "scripts": {
-    "start": "node ./dist/app.js",
+    "start": "node dist/app.js",
     "dev": "npx nodemon",
     "build": "npx tsc --outDir ./dist"
   },
