@@ -1,6 +1,6 @@
 {
   "name": "backend-sistema-de-gestion",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Sistema de gestion para centro educativo educar para transformar ",
   "main": "dist/app.js",
   "scripts": {
