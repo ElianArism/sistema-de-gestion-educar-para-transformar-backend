@@ -4,7 +4,7 @@ const mongoose_1 = require("mongoose");
 const parse_model_to_json_utilts_1 = require("../../utils/parse-model-to-json.utilts");
 const SubjectSchema = new mongoose_1.Schema({
     professor: {
-        type: String,
+        type: mongoose_1.Schema.Types.ObjectId,
         required: true,
     },
     name: {
@@ -14,7 +14,7 @@ const SubjectSchema = new mongoose_1.Schema({
     students: {
         type: [
             {
-                type: mongoose_1.Types.ObjectId,
+                type: mongoose_1.Schema.Types.ObjectId,
             },
         ],
         default: [],

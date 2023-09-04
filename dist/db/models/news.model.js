@@ -14,11 +14,12 @@ const NewsSchema = new mongoose_1.Schema({
     },
     imgUrl: {
         type: String,
-        required: true,
+        required: false,
     },
     date: {
         type: String,
-        required: true,
+        required: false,
+        default: new Date().toISOString(),
     },
     // TODO: Add in V2
     // authorId: {
