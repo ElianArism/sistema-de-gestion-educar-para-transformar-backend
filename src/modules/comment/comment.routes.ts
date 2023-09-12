@@ -12,6 +12,6 @@ export const commentRoutes = Router()
 commentRoutes.get("/", [], getComments)
 commentRoutes.get("/:id", [], getCommentById)
 commentRoutes.get("/:id", [], deleteComment)
-commentRoutes.get("/", createCommentValidations, createComment)
+commentRoutes.post("/", createCommentValidations, createComment)
 
 export default commentRoutes

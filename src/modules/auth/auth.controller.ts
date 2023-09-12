@@ -7,7 +7,7 @@ import { signJWT } from "../../utils/jwt.utils"
 
 export const login = async (req: Request, res: Response) => {
   const { id, password, role } = req.body as LoginUserDTO
-
+  console.log(req.body)
   try {
     const collection = getUserCollectionByRole(role as AvailableRoles)
 

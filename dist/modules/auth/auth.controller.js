@@ -6,6 +6,7 @@ const get_user_repository_by_role_1 = require("../../utils/get-user-repository-b
 const jwt_utils_1 = require("../../utils/jwt.utils");
 const login = async (req, res) => {
     const { id, password, role } = req.body;
+    console.log(req.body);
     try {
         const collection = (0, get_user_repository_by_role_1.getUserCollectionByRole)(role);
         if (!collection) {
