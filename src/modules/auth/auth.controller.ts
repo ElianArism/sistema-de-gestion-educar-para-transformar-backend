@@ -34,7 +34,7 @@ export const login = async (req: Request, res: Response) => {
     if (isEqualToEcryptedField(password, user.password)) {
       return res.json({
         ok: true,
-        data: await signJWT(user.role, user.id),
+        data: await signJWT(role, user.id),
       })
     } else {
       return res.status(400).json({
