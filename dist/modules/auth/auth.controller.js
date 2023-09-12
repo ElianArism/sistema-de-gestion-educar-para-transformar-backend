@@ -28,7 +28,7 @@ const login = async (req, res) => {
         if ((0, encription_utils_1.isEqualToEcryptedField)(password, user.password)) {
             return res.json({
                 ok: true,
-                data: await (0, jwt_utils_1.signJWT)(user.role, user.id),
+                data: await (0, jwt_utils_1.signJWT)(role, user.id),
             });
         }
         else {
