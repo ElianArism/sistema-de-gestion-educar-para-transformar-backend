@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePassword = exports.getAllUsers = exports.getUserById = exports.deleteUser = exports.updateProfessor = exports.createProfessor = exports.updateStudent = exports.createStudent = exports.updateParent = exports.createParent = void 0;
+exports.payFee = exports.updatePassword = exports.getAllUsers = exports.getUserById = exports.deleteUser = exports.updateProfessor = exports.createProfessor = exports.updateStudent = exports.createStudent = exports.updateParent = exports.createParent = void 0;
 const parent_model_1 = __importDefault(require("../../db/models/parent.model"));
 const student_model_1 = __importDefault(require("../../db/models/student.model"));
 const encription_utils_1 = require("../../utils/encription.utils");
@@ -375,4 +375,38 @@ const updatePassword = async (req, res) => {
     }
 };
 exports.updatePassword = updatePassword;
+const payFee = async (req, res) => {
+    const { studentId, ...fee } = req.body;
+    try {
+        const student = await student_model_1.default.findById(studentId);
+        if (!student) {
+            return res.status(404).json({
+                ok: false,
+                error: {
+                    message: "Student not found",
+                },
+            });
+        }
+        const updatedStudent = await student_model_1.default.findOneAndUpdate({ id: studentId }, {
+            ...student,
+            fees: student?.fees?.length ? [fee, ...student.fees] : [fee],
+        }, { new: true });
+        return res.json({
+            ok: true,
+            data: {
+                fees: updatedStudent.fees,
+            },
+        });
+    }
+    catch (error) {
+        return res.status(error?.status ?? 500).json({
+            ok: false,
+            error: {
+                message: error?.message,
+                logs: error,
+            },
+        });
+    }
+};
+exports.payFee = payFee;
 //# sourceMappingURL=user.controller.js.map

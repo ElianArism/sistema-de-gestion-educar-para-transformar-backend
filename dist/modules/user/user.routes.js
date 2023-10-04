@@ -10,6 +10,7 @@ userRoutes.get("/:role/:id", [], user_controller_1.getUserById);
 userRoutes.delete("/:role/:id", [], user_controller_1.deleteUser);
 userRoutes.put("/update-password", [validate_jwt_middleware_1.validateJWT], user_controller_1.updatePassword);
 userRoutes.put("/professor/:id", user_validation_1.updateProfessorValidations, user_controller_1.updateProfessor);
+userRoutes.put("/student/fees", [] /* [validateJWT] */, user_controller_1.payFee);
 userRoutes.put("/student/:id", user_validation_1.updateStudentValidations, user_controller_1.updateStudent);
 userRoutes.put("/parent/:id", user_validation_1.updateParentValidations, user_controller_1.updateParent);
 userRoutes.post("/professor", user_validation_1.createProfessorValidations, user_controller_1.createProfessor);

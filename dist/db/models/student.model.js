@@ -14,6 +14,25 @@ const StudentSchema = new mongoose_1.Schema({
             default: [],
         },
     ],
+    fees: [
+        new mongoose_1.Schema({
+            expireDate: {
+                type: String,
+                required: true,
+            },
+            value: {
+                type: Number,
+                required: true,
+            },
+            isPaid: {
+                type: Boolean,
+                default: false,
+            },
+            paymentDate: {
+                type: String,
+            },
+        }),
+    ],
 });
 (0, parse_model_to_json_utilts_1.parseModelToJSON)(StudentSchema);
 const Student = (0, mongoose_1.model)("Student", StudentSchema);

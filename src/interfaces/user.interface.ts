@@ -17,6 +17,12 @@ export interface IProfessor extends IUser {
 
 export interface IStudent extends IUser {
   subjects?: string[]
+  fees: {
+    expireDate: string
+    value: string
+    paymentDate?: string
+    isPaid: boolean
+  }[]
 }
 
 export interface IParent extends IUser {

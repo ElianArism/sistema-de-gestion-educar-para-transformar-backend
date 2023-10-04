@@ -11,6 +11,25 @@ const StudentSchema = new Schema<IStudent>({
       default: [],
     },
   ],
+  fees: [
+    new Schema({
+      expireDate: {
+        type: String,
+        required: true,
+      },
+      value: {
+        type: Number,
+        required: true,
+      },
+      isPaid: {
+        type: Boolean,
+        default: false,
+      },
+      paymentDate: {
+        type: String,
+      },
+    }),
+  ],
 })
 
 parseModelToJSON(StudentSchema)

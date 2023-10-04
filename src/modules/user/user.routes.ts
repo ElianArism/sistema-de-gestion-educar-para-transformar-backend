@@ -17,6 +17,7 @@ import {
   deleteUser,
   getAllUsers,
   getUserById,
+  payFee,
   updateParent,
   updatePassword,
   updateProfessor,
@@ -31,6 +32,7 @@ userRoutes.delete("/:role/:id", [], deleteUser)
 userRoutes.put("/update-password", [validateJWT], updatePassword)
 
 userRoutes.put("/professor/:id", updateProfessorValidations, updateProfessor)
+userRoutes.put("/student/fees", [] /* [validateJWT] */, payFee)
 userRoutes.put("/student/:id", updateStudentValidations, updateStudent)
 userRoutes.put("/parent/:id", updateParentValidations, updateParent)
 

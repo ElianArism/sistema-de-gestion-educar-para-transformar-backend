@@ -412,3 +412,44 @@ export const updatePassword = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const payFee = async (req: Request, res: Response) => {
+  const { studentId, ...fee } = req.body
+
+  try {
+    const student = await Student.findById(studentId)
+
+    if (!student) {
+      return res.status(404).json({
+        ok: false,
+        error: {
+          message: "Student not found",
+        },
+      })
+    }
+
+    const updatedStudent = await Student.findOneAndUpdate(
+      { id: studentId },
+      {
+        ...student,
+        fees: student?.fees?.length ? [fee, ...student.fees] : [fee],
+      },
+      { new: true }
+    )
+
+    return res.json({
+      ok: true,
+      data: {
+        fees: (updatedStudent as IStudent).fees,
+      },
+    })
+  } catch (error: any) {
+    return res.status(error?.status ?? 500).json({
+      ok: false,
+      error: {
+        message: error?.message,
+        logs: error,
+      },
+    })
+  }
+}
