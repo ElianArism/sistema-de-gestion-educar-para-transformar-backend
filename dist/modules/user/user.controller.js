@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.payFee = exports.updatePassword = exports.getAllUsers = exports.getUserById = exports.deleteUser = exports.updateProfessor = exports.createProfessor = exports.updateStudent = exports.createStudent = exports.updateParent = exports.createParent = void 0;
 const parent_model_1 = __importDefault(require("../../db/models/parent.model"));
+const professor_model_1 = __importDefault(require("../../db/models/professor.model"));
 const student_model_1 = __importDefault(require("../../db/models/student.model"));
 const encription_utils_1 = require("../../utils/encription.utils");
 const get_user_repository_by_role_1 = require("../../utils/get-user-repository-by-role");
@@ -88,6 +89,15 @@ exports.updateParent = updateParent;
 const createStudent = async (req, res) => {
     const studentDTO = req.body;
     try {
+        const studentExists = await student_model_1.default.findOne({ id: studentDTO.id });
+        if (studentExists) {
+            return res.status(400).json({
+                ok: false,
+                error: {
+                    message: "Student already exists with this DNI / ID",
+                },
+            });
+        }
         studentDTO.password = (0, encription_utils_1.encrypt)(studentDTO.password);
         studentDTO.role = "student" /* AvailableRoles.student */;
         const studentDoc = new student_model_1.default(studentDTO);
@@ -152,9 +162,18 @@ exports.updateStudent = updateStudent;
 const createProfessor = async (req, res) => {
     const professorDTO = req.body;
     try {
+        const professorExists = await professor_model_1.default.findOne({ id: professorDTO.id });
+        if (professorExists) {
+            return res.status(400).json({
+                ok: false,
+                error: {
+                    message: "Professor already exists with this DNI / ID",
+                },
+            });
+        }
         professorDTO.password = (0, encription_utils_1.encrypt)(professorDTO.password);
         professorDTO.role = "professor" /* AvailableRoles.professor */;
-        const professorDoc = new student_model_1.default(professorDTO);
+        const professorDoc = new professor_model_1.default(professorDTO);
         await professorDoc.save();
         return res.json({
             ok: true,

@@ -1,5 +1,6 @@
 import type { Request, Response } from "express"
 import Parent from "../../db/models/parent.model"
+import Professor from "../../db/models/professor.model"
 import Student from "../../db/models/student.model"
 import { AvailableRoles } from "../../enums/roles.enum"
 import { IParent, IProfessor, IStudent } from "../../interfaces/user.interface"
@@ -99,6 +100,16 @@ export const createStudent = async (req: Request, res: Response) => {
   const studentDTO = req.body as IStudent
 
   try {
+    const studentExists = await Student.findOne({ id: studentDTO.id })
+
+    if (studentExists) {
+      return res.status(400).json({
+        ok: false,
+        error: {
+          message: "Student already exists with this DNI / ID",
+        },
+      })
+    }
     studentDTO.password = encrypt(studentDTO.password)
     studentDTO.role = AvailableRoles.student
     const studentDoc = new Student(studentDTO)
@@ -169,9 +180,19 @@ export const createProfessor = async (req: Request, res: Response) => {
   const professorDTO = req.body as IProfessor
 
   try {
+    const professorExists = await Professor.findOne({ id: professorDTO.id })
+
+    if (professorExists) {
+      return res.status(400).json({
+        ok: false,
+        error: {
+          message: "Professor already exists with this DNI / ID",
+        },
+      })
+    }
     professorDTO.password = encrypt(professorDTO.password)
     professorDTO.role = AvailableRoles.professor
-    const professorDoc = new Student(professorDTO)
+    const professorDoc = new Professor(professorDTO)
     await professorDoc.save()
 
     return res.json({
