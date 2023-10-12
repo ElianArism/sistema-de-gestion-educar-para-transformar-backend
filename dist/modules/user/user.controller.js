@@ -395,9 +395,9 @@ const updatePassword = async (req, res) => {
 };
 exports.updatePassword = updatePassword;
 const payFee = async (req, res) => {
-    const { studentId, ...fee } = req.body;
+    const { studentId, ...dto } = req.body;
     try {
-        const student = await student_model_1.default.findById(studentId);
+        const student = await student_model_1.default.findOne({ id: studentId });
         if (!student) {
             return res.status(404).json({
                 ok: false,
@@ -407,8 +407,9 @@ const payFee = async (req, res) => {
             });
         }
         const updatedStudent = await student_model_1.default.findOneAndUpdate({ id: studentId }, {
-            ...student,
-            fees: student?.fees?.length ? [fee, ...student.fees] : [fee],
+            fees: student?.fees?.length
+                ? [...dto.fees, ...student.fees]
+                : [...dto.fees],
         }, { new: true });
         return res.json({
             ok: true,

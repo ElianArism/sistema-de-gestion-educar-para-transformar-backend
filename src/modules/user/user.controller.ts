@@ -435,10 +435,10 @@ export const updatePassword = async (req: Request, res: Response) => {
 }
 
 export const payFee = async (req: Request, res: Response) => {
-  const { studentId, ...fee } = req.body
+  const { studentId, ...dto } = req.body
 
   try {
-    const student = await Student.findById(studentId)
+    const student = await Student.findOne({ id: studentId })
 
     if (!student) {
       return res.status(404).json({
@@ -452,8 +452,9 @@ export const payFee = async (req: Request, res: Response) => {
     const updatedStudent = await Student.findOneAndUpdate(
       { id: studentId },
       {
-        ...student,
-        fees: student?.fees?.length ? [fee, ...student.fees] : [fee],
+        fees: student?.fees?.length
+          ? [...dto.fees, ...student.fees]
+          : [...dto.fees],
       },
       { new: true }
     )
