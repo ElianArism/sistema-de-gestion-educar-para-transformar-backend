@@ -9,6 +9,17 @@ export interface ICourse {
     startTime: string
     endTime: string
   }[]
-  students: ObjectId[] | IStudent[]
+  students: {
+    studentInfo: ObjectId | IStudent
+    schoolGrades: {
+      firstTrimester: number
+      secondTrimester: number
+      thirdTrimester: number
+      finalGrade: number
+      firstDoOver: number
+      secondDoOver: number
+      thirdDoOver: number
+    }
+  }[]
   professor: ObjectId | IProfessor
 }

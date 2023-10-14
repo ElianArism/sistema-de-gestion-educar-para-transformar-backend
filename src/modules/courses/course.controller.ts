@@ -7,7 +7,7 @@ export const getCourses = async (req: Request, res: Response) => {
       ok: true,
       data: {
         courses: await Course.find()
-          .populate("students", "-_id -__v")
+          .populate("students.studentInfo", "-_id -__v")
           .populate("professor", "-_id -__v")
           .exec(),
       },
@@ -37,6 +37,63 @@ export const createCourse = async (req: Request, res: Response) => {
       ok: true,
       data: {
         id: doc._id,
+      },
+    })
+  } catch (error: any) {
+    if (process.env.LOGS_ENABLED) {
+      console.log("===== Error =====")
+      console.log(error)
+      console.log("===== End Error =====")
+    }
+
+    return res.status(error?.status ?? 500).json({
+      ok: false,
+      error: {
+        message: error?.message,
+        logs: error,
+      },
+    })
+  }
+}
+
+export const updateCourse = async (req: Request, res: Response) => {
+  const course = req.body
+  const id = req.params.courseId
+  try {
+    const updatedCourse = await Course.findByIdAndUpdate(id, course)
+
+    return res.status(!!updateCourse ? 200 : 404).json({
+      ok: !!updatedCourse,
+      data: {
+        id: !!updatedCourse ? updatedCourse.toJSON() : "Course not found",
+      },
+    })
+  } catch (error: any) {
+    if (process.env.LOGS_ENABLED) {
+      console.log("===== Error =====")
+      console.log(error)
+      console.log("===== End Error =====")
+    }
+
+    return res.status(error?.status ?? 500).json({
+      ok: false,
+      error: {
+        message: error?.message,
+        logs: error,
+      },
+    })
+  }
+}
+
+export const deleteCourse = async (req: Request, res: Response) => {
+  const id = req.params.courseId
+  try {
+    const deletedCourse = await Course.findByIdAndDelete(id)
+
+    return res.status(!!updateCourse ? 200 : 404).json({
+      ok: !!deletedCourse,
+      data: {
+        id: !!deletedCourse ? deletedCourse.toJSON() : "Course not found",
       },
     })
   } catch (error: any) {

@@ -30,8 +30,39 @@ const CourseSchema = new Schema<ICourse>({
   ],
   students: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Student",
+      _id: false,
+      type: {
+        studentInfo: {
+          type: Schema.Types.ObjectId,
+          ref: "Student",
+        },
+        schoolGrades: {
+          _id: false,
+          type: {
+            firstTrimester: {
+              type: Number,
+            },
+            secondTrimester: {
+              type: Number,
+            },
+            thirdTrimester: {
+              type: Number,
+            },
+            finalGrade: {
+              type: Number,
+            },
+            firstDoOver: {
+              type: Number,
+            },
+            secondDoOver: {
+              type: Number,
+            },
+            thirdDoOver: {
+              type: Number,
+            },
+          },
+        },
+      },
     },
   ],
   professor: {

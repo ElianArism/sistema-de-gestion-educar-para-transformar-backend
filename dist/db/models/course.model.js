@@ -30,8 +30,39 @@ const CourseSchema = new mongoose_1.Schema({
     ],
     students: [
         {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Student",
+            _id: false,
+            type: {
+                studentInfo: {
+                    type: mongoose_1.Schema.Types.ObjectId,
+                    ref: "Student",
+                },
+                schoolGrades: {
+                    _id: false,
+                    type: {
+                        firstTrimester: {
+                            type: Number,
+                        },
+                        secondTrimester: {
+                            type: Number,
+                        },
+                        thirdTrimester: {
+                            type: Number,
+                        },
+                        finalGrade: {
+                            type: Number,
+                        },
+                        firstDoOver: {
+                            type: Number,
+                        },
+                        secondDoOver: {
+                            type: Number,
+                        },
+                        thirdDoOver: {
+                            type: Number,
+                        },
+                    },
+                },
+            },
         },
     ],
     professor: {
