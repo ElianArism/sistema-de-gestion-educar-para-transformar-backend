@@ -1,11 +1,104 @@
 import type { Request, Response } from "express"
+import Authority from "../../db/models/authority.model"
 import Parent from "../../db/models/parent.model"
+import Personal from "../../db/models/personal.model"
 import Professor from "../../db/models/professor.model"
 import Student from "../../db/models/student.model"
 import { AvailableRoles } from "../../enums/roles.enum"
-import { IParent, IProfessor, IStudent } from "../../interfaces/user.interface"
+import {
+  IParent,
+  IProfessor,
+  IStudent,
+  IUser,
+} from "../../interfaces/user.interface"
 import { encrypt, isEqualToEcryptedField } from "../../utils/encription.utils"
 import { getUserCollectionByRole } from "../../utils/get-user-repository-by-role"
+
+export const createAuthority = async (req: Request, res: Response) => {
+  const authorityDTO = req.body as IUser
+
+  try {
+    authorityDTO.password = encrypt(authorityDTO.password)
+    authorityDTO.role = AvailableRoles.authority
+    const authorityExists = await Authority.findOne({ id: authorityDTO.id })
+
+    if (authorityExists) {
+      return res.status(400).json({
+        ok: false,
+        error: {
+          message: "authority already exists with this DNI / ID",
+        },
+      })
+    }
+    authorityDTO.password = encrypt(authorityDTO.password)
+    const authorityDoc = new Authority(authorityDTO)
+    await authorityDoc.save()
+
+    return {
+      ok: true,
+      data: {
+        id: authorityDTO.id,
+      },
+    }
+  } catch (error: any) {
+    if (process.env.LOGS_ENABLED) {
+      console.log("===== Error =====")
+      console.log(error)
+      console.log("===== End Error =====")
+    }
+
+    return res.status(error?.status ?? 500).json({
+      ok: false,
+      error: {
+        message: error?.message,
+        logs: error,
+      },
+    })
+  }
+}
+
+export const createPersonal = async (req: Request, res: Response) => {
+  const personalDTO = req.body as IUser
+
+  try {
+    personalDTO.password = encrypt(personalDTO.password)
+    personalDTO.role = AvailableRoles.personal
+    const personalExists = await Personal.findOne({ id: personalDTO.id })
+
+    if (personalExists) {
+      return res.status(400).json({
+        ok: false,
+        error: {
+          message: "Personal already exists with this DNI / ID",
+        },
+      })
+    }
+    personalDTO.password = encrypt(personalDTO.password)
+    const personalDoc = new Personal(personalDTO)
+    await personalDoc.save()
+
+    return {
+      ok: true,
+      data: {
+        id: personalDTO.id,
+      },
+    }
+  } catch (error: any) {
+    if (process.env.LOGS_ENABLED) {
+      console.log("===== Error =====")
+      console.log(error)
+      console.log("===== End Error =====")
+    }
+
+    return res.status(error?.status ?? 500).json({
+      ok: false,
+      error: {
+        message: error?.message,
+        logs: error,
+      },
+    })
+  }
+}
 
 export const createParent = async (req: Request, res: Response) => {
   const parentDTO = req.body as IParent

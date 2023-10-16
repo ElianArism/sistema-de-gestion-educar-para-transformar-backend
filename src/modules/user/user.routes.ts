@@ -11,7 +11,9 @@ import {
 } from "../../middlewares/validations/user.validation"
 
 import {
+  createAuthority,
   createParent,
+  createPersonal,
   createProfessor,
   createStudent,
   deleteUser,
@@ -36,6 +38,8 @@ userRoutes.put("/student/fees", [] /* [validateJWT] */, payFee)
 userRoutes.put("/student/:id", updateStudentValidations, updateStudent)
 userRoutes.put("/parent/:id", updateParentValidations, updateParent)
 
+userRoutes.post("/personal", createProfessorValidations, createPersonal)
+userRoutes.post("/authority", createProfessorValidations, createAuthority)
 userRoutes.post("/professor", createProfessorValidations, createProfessor)
 userRoutes.post("/student", createStudentValidations, createStudent)
 userRoutes.post("/parent", createParentValidations, createParent)

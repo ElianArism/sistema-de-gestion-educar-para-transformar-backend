@@ -3,12 +3,94 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.payFee = exports.updatePassword = exports.getAllUsers = exports.getUserById = exports.deleteUser = exports.updateProfessor = exports.createProfessor = exports.updateStudent = exports.createStudent = exports.updateParent = exports.createParent = void 0;
+exports.payFee = exports.updatePassword = exports.getAllUsers = exports.getUserById = exports.deleteUser = exports.updateProfessor = exports.createProfessor = exports.updateStudent = exports.createStudent = exports.updateParent = exports.createParent = exports.createPersonal = exports.createAuthority = void 0;
+const authority_model_1 = __importDefault(require("../../db/models/authority.model"));
 const parent_model_1 = __importDefault(require("../../db/models/parent.model"));
+const personal_model_1 = __importDefault(require("../../db/models/personal.model"));
 const professor_model_1 = __importDefault(require("../../db/models/professor.model"));
 const student_model_1 = __importDefault(require("../../db/models/student.model"));
 const encription_utils_1 = require("../../utils/encription.utils");
 const get_user_repository_by_role_1 = require("../../utils/get-user-repository-by-role");
+const createAuthority = async (req, res) => {
+    const authorityDTO = req.body;
+    try {
+        authorityDTO.password = (0, encription_utils_1.encrypt)(authorityDTO.password);
+        authorityDTO.role = "authority" /* AvailableRoles.authority */;
+        const authorityExists = await authority_model_1.default.findOne({ id: authorityDTO.id });
+        if (authorityExists) {
+            return res.status(400).json({
+                ok: false,
+                error: {
+                    message: "authority already exists with this DNI / ID",
+                },
+            });
+        }
+        authorityDTO.password = (0, encription_utils_1.encrypt)(authorityDTO.password);
+        const authorityDoc = new authority_model_1.default(authorityDTO);
+        await authorityDoc.save();
+        return {
+            ok: true,
+            data: {
+                id: authorityDTO.id,
+            },
+        };
+    }
+    catch (error) {
+        if (process.env.LOGS_ENABLED) {
+            console.log("===== Error =====");
+            console.log(error);
+            console.log("===== End Error =====");
+        }
+        return res.status(error?.status ?? 500).json({
+            ok: false,
+            error: {
+                message: error?.message,
+                logs: error,
+            },
+        });
+    }
+};
+exports.createAuthority = createAuthority;
+const createPersonal = async (req, res) => {
+    const personalDTO = req.body;
+    try {
+        personalDTO.password = (0, encription_utils_1.encrypt)(personalDTO.password);
+        personalDTO.role = "personal" /* AvailableRoles.personal */;
+        const personalExists = await personal_model_1.default.findOne({ id: personalDTO.id });
+        if (personalExists) {
+            return res.status(400).json({
+                ok: false,
+                error: {
+                    message: "Personal already exists with this DNI / ID",
+                },
+            });
+        }
+        personalDTO.password = (0, encription_utils_1.encrypt)(personalDTO.password);
+        const personalDoc = new personal_model_1.default(personalDTO);
+        await personalDoc.save();
+        return {
+            ok: true,
+            data: {
+                id: personalDTO.id,
+            },
+        };
+    }
+    catch (error) {
+        if (process.env.LOGS_ENABLED) {
+            console.log("===== Error =====");
+            console.log(error);
+            console.log("===== End Error =====");
+        }
+        return res.status(error?.status ?? 500).json({
+            ok: false,
+            error: {
+                message: error?.message,
+                logs: error,
+            },
+        });
+    }
+};
+exports.createPersonal = createPersonal;
 const createParent = async (req, res) => {
     const parentDTO = req.body;
     try {
