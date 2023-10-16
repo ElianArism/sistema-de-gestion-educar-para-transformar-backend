@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import Course from "../../db/models/course.model"
+import { IStudent } from "../../interfaces/user.interface"
 
 export const getCourses = async (req: Request, res: Response) => {
   try {
@@ -96,6 +97,76 @@ export const deleteCourse = async (req: Request, res: Response) => {
         id: !!deletedCourse ? deletedCourse.toJSON() : "Course not found",
       },
     })
+  } catch (error: any) {
+    if (process.env.LOGS_ENABLED) {
+      console.log("===== Error =====")
+      console.log(error)
+      console.log("===== End Error =====")
+    }
+
+    return res.status(error?.status ?? 500).json({
+      ok: false,
+      error: {
+        message: error?.message,
+        logs: error,
+      },
+    })
+  }
+}
+
+export const updateCourseNotesByStudent = async (
+  req: Request,
+  res: Response
+) => {
+  const courseId = req.params.courseId
+  const studentId = req.params.studentId
+  const notes = req.body
+
+  try {
+    const course = (
+      await Course.findById(courseId).populate(
+        "students.studentInfo",
+        "-_id -__v"
+      )
+    )?.toJSON()
+
+    if (!course) {
+      return res.status(404).json({
+        ok: false,
+        data: {
+          error: "Course not found",
+        },
+      })
+    }
+
+    const studentIdx = course.students.findIndex(
+      (student) => (student.studentInfo as IStudent).id === studentId
+    )
+
+    if (studentIdx === -1) {
+      console.log(JSON.stringify(course))
+
+      return res.status(404).json({
+        ok: false,
+        data: {
+          error: "student not found",
+        },
+      })
+    }
+
+    course.students[studentIdx].schoolGrades = {
+      ...course.students[studentIdx].schoolGrades,
+      ...notes,
+    }
+
+    await Course.findByIdAndUpdate(course._id, course)
+
+    return {
+      ok: true,
+      data: {
+        id: course._id,
+      },
+    }
   } catch (error: any) {
     if (process.env.LOGS_ENABLED) {
       console.log("===== Error =====")
