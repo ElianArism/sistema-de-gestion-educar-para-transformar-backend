@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourses = void 0;
+exports.updateCourseNotesByStudent = exports.deleteCourse = exports.updateCourse = exports.createCourse = exports.getCourses = void 0;
 const course_model_1 = __importDefault(require("../../db/models/course.model"));
 const getCourses = async (req, res) => {
     try {
@@ -116,4 +116,56 @@ const deleteCourse = async (req, res) => {
     }
 };
 exports.deleteCourse = deleteCourse;
+const updateCourseNotesByStudent = async (req, res) => {
+    const courseId = req.params.courseId;
+    const studentId = req.params.studentId;
+    const notes = req.body;
+    try {
+        const course = (await course_model_1.default.findById(courseId).populate("students.studentInfo", "-_id -__v"))?.toJSON();
+        if (!course) {
+            return res.status(404).json({
+                ok: false,
+                data: {
+                    error: "Course not found",
+                },
+            });
+        }
+        const studentIdx = course.students.findIndex((student) => student.studentInfo.id === studentId);
+        if (studentIdx === -1) {
+            console.log(JSON.stringify(course));
+            return res.status(404).json({
+                ok: false,
+                data: {
+                    error: "student not found",
+                },
+            });
+        }
+        course.students[studentIdx].schoolGrades = {
+            ...course.students[studentIdx].schoolGrades,
+            ...notes,
+        };
+        await course_model_1.default.findByIdAndUpdate(course._id, course);
+        return {
+            ok: true,
+            data: {
+                id: course._id,
+            },
+        };
+    }
+    catch (error) {
+        if (process.env.LOGS_ENABLED) {
+            console.log("===== Error =====");
+            console.log(error);
+            console.log("===== End Error =====");
+        }
+        return res.status(error?.status ?? 500).json({
+            ok: false,
+            error: {
+                message: error?.message,
+                logs: error,
+            },
+        });
+    }
+};
+exports.updateCourseNotesByStudent = updateCourseNotesByStudent;
 //# sourceMappingURL=course.controller.js.map
