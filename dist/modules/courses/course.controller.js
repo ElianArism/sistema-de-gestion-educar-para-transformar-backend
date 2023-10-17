@@ -144,6 +144,10 @@ const updateCourseNotesByStudent = async (req, res) => {
             ...course.students[studentIdx].schoolGrades,
             ...notes,
         };
+        course.students = course.students.map((c) => {
+            c.studentInfo = c.studentInfo.id;
+            return c;
+        });
         await course_model_1.default.findByIdAndUpdate(course._id, course);
         return {
             ok: true,
