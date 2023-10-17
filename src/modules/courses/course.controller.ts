@@ -166,12 +166,12 @@ export const updateCourseNotesByStudent = async (
 
     await Course.findByIdAndUpdate(course._id, course)
 
-    return {
+    return res.json({
       ok: true,
       data: {
         id: course._id,
       },
-    }
+    })
   } catch (error: any) {
     if (process.env.LOGS_ENABLED) {
       console.log("===== Error =====")
