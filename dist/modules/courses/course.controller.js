@@ -149,12 +149,12 @@ const updateCourseNotesByStudent = async (req, res) => {
             return c;
         });
         await course_model_1.default.findByIdAndUpdate(course._id, course);
-        return {
+        return res.json({
             ok: true,
             data: {
                 id: course._id,
             },
-        };
+        });
     }
     catch (error) {
         if (process.env.LOGS_ENABLED) {
