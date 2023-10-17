@@ -107,8 +107,6 @@ export const createParent = async (req: Request, res: Response) => {
   const parentDTO = req.body as IParent
 
   try {
-    parentDTO.password = encrypt(parentDTO.password)
-    parentDTO.role = AvailableRoles.parent
     const parentExists = await Parent.findOne({ id: parentDTO.id })
 
     if (parentExists) {
@@ -119,6 +117,8 @@ export const createParent = async (req: Request, res: Response) => {
         },
       })
     }
+    parentDTO.password = encrypt(parentDTO.password)
+    parentDTO.role = AvailableRoles.parent
     const parentDoc = new Parent({ ...parentDTO, _id: parentDTO.id })
     await parentDoc.save()
 

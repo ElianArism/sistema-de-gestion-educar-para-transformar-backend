@@ -97,8 +97,6 @@ exports.createPersonal = createPersonal;
 const createParent = async (req, res) => {
     const parentDTO = req.body;
     try {
-        parentDTO.password = (0, encription_utils_1.encrypt)(parentDTO.password);
-        parentDTO.role = "parent" /* AvailableRoles.parent */;
         const parentExists = await parent_model_1.default.findOne({ id: parentDTO.id });
         if (parentExists) {
             return res.status(400).json({
@@ -109,6 +107,7 @@ const createParent = async (req, res) => {
             });
         }
         parentDTO.password = (0, encription_utils_1.encrypt)(parentDTO.password);
+        parentDTO.role = "parent" /* AvailableRoles.parent */;
         const parentDoc = new parent_model_1.default({ ...parentDTO, _id: parentDTO.id });
         await parentDoc.save();
         return res.json({
