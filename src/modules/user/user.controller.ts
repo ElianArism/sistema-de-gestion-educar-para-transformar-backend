@@ -119,7 +119,6 @@ export const createParent = async (req: Request, res: Response) => {
         },
       })
     }
-    parentDTO.password = encrypt(parentDTO.password)
     const parentDoc = new Parent({ ...parentDTO, _id: parentDTO.id })
     await parentDoc.save()
 
