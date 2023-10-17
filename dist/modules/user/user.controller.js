@@ -26,7 +26,10 @@ const createAuthority = async (req, res) => {
             });
         }
         authorityDTO.password = (0, encription_utils_1.encrypt)(authorityDTO.password);
-        const authorityDoc = new authority_model_1.default(authorityDTO);
+        const authorityDoc = new authority_model_1.default({
+            ...authorityDTO,
+            _id: authorityDTO.id,
+        });
         await authorityDoc.save();
         return {
             ok: true,
@@ -66,7 +69,7 @@ const createPersonal = async (req, res) => {
             });
         }
         personalDTO.password = (0, encription_utils_1.encrypt)(personalDTO.password);
-        const personalDoc = new personal_model_1.default(personalDTO);
+        const personalDoc = new personal_model_1.default({ ...personalDTO, _id: personalDTO.id });
         await personalDoc.save();
         return {
             ok: true,
@@ -106,7 +109,7 @@ const createParent = async (req, res) => {
             });
         }
         parentDTO.password = (0, encription_utils_1.encrypt)(parentDTO.password);
-        const parentDoc = new parent_model_1.default(parentDTO);
+        const parentDoc = new parent_model_1.default({ ...parentDTO, _id: parentDTO.id });
         await parentDoc.save();
         return {
             ok: true,
@@ -182,7 +185,7 @@ const createStudent = async (req, res) => {
         }
         studentDTO.password = (0, encription_utils_1.encrypt)(studentDTO.password);
         studentDTO.role = "student" /* AvailableRoles.student */;
-        const studentDoc = new student_model_1.default(studentDTO);
+        const studentDoc = new student_model_1.default({ ...studentDTO, _id: studentDTO.id });
         await studentDoc.save();
         return res.json({
             ok: true,
@@ -255,7 +258,10 @@ const createProfessor = async (req, res) => {
         }
         professorDTO.password = (0, encription_utils_1.encrypt)(professorDTO.password);
         professorDTO.role = "professor" /* AvailableRoles.professor */;
-        const professorDoc = new professor_model_1.default(professorDTO);
+        const professorDoc = new professor_model_1.default({
+            ...professorDTO,
+            _id: professorDTO.id,
+        });
         await professorDoc.save();
         return res.json({
             ok: true,

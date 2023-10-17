@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose"
 import { IParent } from "../../interfaces/user.interface"
-import { parseModelToJSON } from "../../utils/parse-model-to-json.utilts"
 import UserSchema from "./user.model"
 
 const ParentSchema = new Schema<IParent>(
@@ -12,12 +11,8 @@ const ParentSchema = new Schema<IParent>(
       required: true,
     },
   },
-  {
-    _id: false,
-  }
+  { _id: false }
 )
-
-parseModelToJSON(ParentSchema)
 
 const Parent = model<IParent>("Parent", ParentSchema)
 

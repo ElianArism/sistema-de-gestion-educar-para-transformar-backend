@@ -33,7 +33,7 @@ const StudentSchema = new mongoose_1.Schema({
             },
         }),
     ],
-});
+}, { _id: false });
 (0, parse_model_to_json_utilts_1.parseModelToJSON)(StudentSchema);
 const Student = (0, mongoose_1.model)("Student", StudentSchema);
 exports.default = Student;

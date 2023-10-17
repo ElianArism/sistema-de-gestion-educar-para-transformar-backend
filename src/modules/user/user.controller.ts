@@ -31,7 +31,10 @@ export const createAuthority = async (req: Request, res: Response) => {
       })
     }
     authorityDTO.password = encrypt(authorityDTO.password)
-    const authorityDoc = new Authority(authorityDTO)
+    const authorityDoc = new Authority({
+      ...authorityDTO,
+      _id: authorityDTO.id,
+    })
     await authorityDoc.save()
 
     return {
@@ -74,7 +77,7 @@ export const createPersonal = async (req: Request, res: Response) => {
       })
     }
     personalDTO.password = encrypt(personalDTO.password)
-    const personalDoc = new Personal(personalDTO)
+    const personalDoc = new Personal({ ...personalDTO, _id: personalDTO.id })
     await personalDoc.save()
 
     return {
@@ -117,7 +120,7 @@ export const createParent = async (req: Request, res: Response) => {
       })
     }
     parentDTO.password = encrypt(parentDTO.password)
-    const parentDoc = new Parent(parentDTO)
+    const parentDoc = new Parent({ ...parentDTO, _id: parentDTO.id })
     await parentDoc.save()
 
     return {
@@ -205,7 +208,7 @@ export const createStudent = async (req: Request, res: Response) => {
     }
     studentDTO.password = encrypt(studentDTO.password)
     studentDTO.role = AvailableRoles.student
-    const studentDoc = new Student(studentDTO)
+    const studentDoc = new Student({ ...studentDTO, _id: studentDTO.id })
     await studentDoc.save()
 
     return res.json({
@@ -285,7 +288,10 @@ export const createProfessor = async (req: Request, res: Response) => {
     }
     professorDTO.password = encrypt(professorDTO.password)
     professorDTO.role = AvailableRoles.professor
-    const professorDoc = new Professor(professorDTO)
+    const professorDoc = new Professor({
+      ...professorDTO,
+      _id: professorDTO.id,
+    })
     await professorDoc.save()
 
     return res.json({

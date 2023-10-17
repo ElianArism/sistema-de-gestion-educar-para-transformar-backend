@@ -14,7 +14,7 @@ const ProfessorSchema = new mongoose_1.Schema({
             default: [],
         },
     ],
-});
+}, { _id: false });
 (0, parse_model_to_json_utilts_1.parseModelToJSON)(ProfessorSchema);
 const Professor = (0, mongoose_1.model)("Professor", ProfessorSchema);
 exports.default = Professor;

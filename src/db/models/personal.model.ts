@@ -3,7 +3,7 @@ import { IUser } from "../../interfaces/user.interface"
 import { parseModelToJSON } from "../../utils/parse-model-to-json.utilts"
 import UserSchema from "./user.model"
 
-const PersonalSchema = new Schema(UserSchema)
+const PersonalSchema = new Schema(UserSchema, { _id: false })
 
 parseModelToJSON(PersonalSchema)
 

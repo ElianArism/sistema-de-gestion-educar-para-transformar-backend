@@ -1,4 +1,10 @@
+import { Types } from "mongoose"
+
 const UserSchema = {
+  _id: {
+    type: String,
+    default: () => new Types.ObjectId(),
+  },
   id: {
     type: String,
     required: true,

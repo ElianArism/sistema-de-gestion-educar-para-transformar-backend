@@ -13,8 +13,8 @@ userRoutes.put("/professor/:id", user_validation_1.updateProfessorValidations, u
 userRoutes.put("/student/fees", [] /* [validateJWT] */, user_controller_1.payFee);
 userRoutes.put("/student/:id", user_validation_1.updateStudentValidations, user_controller_1.updateStudent);
 userRoutes.put("/parent/:id", user_validation_1.updateParentValidations, user_controller_1.updateParent);
-userRoutes.post("/personal", user_validation_1.createProfessorValidations, user_controller_1.createPersonal);
-userRoutes.post("/authority", user_validation_1.createProfessorValidations, user_controller_1.createAuthority);
+userRoutes.post("/personal", [], user_controller_1.createPersonal);
+userRoutes.post("/authority", [], user_controller_1.createAuthority);
 userRoutes.post("/professor", user_validation_1.createProfessorValidations, user_controller_1.createProfessor);
 userRoutes.post("/student", user_validation_1.createStudentValidations, user_controller_1.createStudent);
 userRoutes.post("/parent", user_validation_1.createParentValidations, user_controller_1.createParent);

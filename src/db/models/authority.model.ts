@@ -3,7 +3,7 @@ import { IUser } from "../../interfaces/user.interface"
 import { parseModelToJSON } from "../../utils/parse-model-to-json.utilts"
 import UserSchema from "./user.model"
 
-const AuthoritySchema = new Schema(UserSchema)
+const AuthoritySchema = new Schema(UserSchema, { _id: false })
 
 parseModelToJSON(AuthoritySchema)
 
