@@ -159,6 +159,11 @@ export const updateCourseNotesByStudent = async (
       ...notes,
     }
 
+    course.students = course.students.map((c) => {
+      c.studentInfo = (c.studentInfo as IStudent).id
+      return c
+    })
+
     await Course.findByIdAndUpdate(course._id, course)
 
     return {
