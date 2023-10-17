@@ -23,7 +23,7 @@ export const createStudentValidations = [
 
 export const createParentValidations = [
   ...userValidations,
-  check("son").not().isEmpty().isMongoId(),
+  check("son").not().isEmpty().isString(),
   checkErrors,
 ]
 

@@ -23,7 +23,7 @@ exports.createStudentValidations = [
 ];
 exports.createParentValidations = [
     ...exports.userValidations,
-    (0, express_validator_1.check)("son").not().isEmpty().isMongoId(),
+    (0, express_validator_1.check)("son").not().isEmpty().isString(),
     check_errors_1.checkErrors,
 ];
 exports.updateUserValidations = [

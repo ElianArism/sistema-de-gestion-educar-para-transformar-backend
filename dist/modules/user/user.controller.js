@@ -31,12 +31,12 @@ const createAuthority = async (req, res) => {
             _id: authorityDTO.id,
         });
         await authorityDoc.save();
-        return {
+        return res.json({
             ok: true,
             data: {
                 id: authorityDTO.id,
             },
-        };
+        });
     }
     catch (error) {
         if (process.env.LOGS_ENABLED) {
@@ -71,12 +71,12 @@ const createPersonal = async (req, res) => {
         personalDTO.password = (0, encription_utils_1.encrypt)(personalDTO.password);
         const personalDoc = new personal_model_1.default({ ...personalDTO, _id: personalDTO.id });
         await personalDoc.save();
-        return {
+        return res.json({
             ok: true,
             data: {
                 id: personalDTO.id,
             },
-        };
+        });
     }
     catch (error) {
         if (process.env.LOGS_ENABLED) {
@@ -111,12 +111,12 @@ const createParent = async (req, res) => {
         parentDTO.password = (0, encription_utils_1.encrypt)(parentDTO.password);
         const parentDoc = new parent_model_1.default({ ...parentDTO, _id: parentDTO.id });
         await parentDoc.save();
-        return {
+        return res.json({
             ok: true,
             data: {
                 id: parentDTO.id,
             },
-        };
+        });
     }
     catch (error) {
         if (process.env.LOGS_ENABLED) {

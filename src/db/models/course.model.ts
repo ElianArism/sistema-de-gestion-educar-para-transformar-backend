@@ -33,7 +33,7 @@ const CourseSchema = new Schema<ICourse>({
       _id: false,
       type: {
         studentInfo: {
-          type: Schema.Types.ObjectId,
+          type: String,
           ref: "Student",
         },
         schoolGrades: {
@@ -66,7 +66,7 @@ const CourseSchema = new Schema<ICourse>({
     },
   ],
   professor: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "Professor",
     required: true,
   },

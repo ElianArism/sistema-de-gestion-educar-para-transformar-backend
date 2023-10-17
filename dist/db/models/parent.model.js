@@ -8,7 +8,7 @@ const user_model_1 = __importDefault(require("./user.model"));
 const ParentSchema = new mongoose_1.Schema({
     ...user_model_1.default,
     son: {
-        type: mongoose_1.Schema.Types.ObjectId,
+        type: String,
         ref: "Students",
         required: true,
     },

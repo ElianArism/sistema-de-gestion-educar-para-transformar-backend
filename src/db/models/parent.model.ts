@@ -6,7 +6,7 @@ const ParentSchema = new Schema<IParent>(
   {
     ...UserSchema,
     son: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: "Students",
       required: true,
     },

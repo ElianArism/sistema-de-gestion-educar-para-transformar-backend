@@ -33,7 +33,7 @@ const CourseSchema = new mongoose_1.Schema({
             _id: false,
             type: {
                 studentInfo: {
-                    type: mongoose_1.Schema.Types.ObjectId,
+                    type: String,
                     ref: "Student",
                 },
                 schoolGrades: {
@@ -66,7 +66,7 @@ const CourseSchema = new mongoose_1.Schema({
         },
     ],
     professor: {
-        type: mongoose_1.Schema.Types.ObjectId,
+        type: String,
         ref: "Professor",
         required: true,
     },

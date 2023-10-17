@@ -37,12 +37,12 @@ export const createAuthority = async (req: Request, res: Response) => {
     })
     await authorityDoc.save()
 
-    return {
+    return res.json({
       ok: true,
       data: {
         id: authorityDTO.id,
       },
-    }
+    })
   } catch (error: any) {
     if (process.env.LOGS_ENABLED) {
       console.log("===== Error =====")
@@ -80,12 +80,12 @@ export const createPersonal = async (req: Request, res: Response) => {
     const personalDoc = new Personal({ ...personalDTO, _id: personalDTO.id })
     await personalDoc.save()
 
-    return {
+    return res.json({
       ok: true,
       data: {
         id: personalDTO.id,
       },
-    }
+    })
   } catch (error: any) {
     if (process.env.LOGS_ENABLED) {
       console.log("===== Error =====")
@@ -123,12 +123,12 @@ export const createParent = async (req: Request, res: Response) => {
     const parentDoc = new Parent({ ...parentDTO, _id: parentDTO.id })
     await parentDoc.save()
 
-    return {
+    return res.json({
       ok: true,
       data: {
         id: parentDTO.id,
       },
-    }
+    })
   } catch (error: any) {
     if (process.env.LOGS_ENABLED) {
       console.log("===== Error =====")

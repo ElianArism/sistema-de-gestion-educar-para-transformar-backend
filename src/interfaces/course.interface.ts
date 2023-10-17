@@ -1,4 +1,3 @@
-import { ObjectId } from "mongoose"
 import { IProfessor, IStudent } from "./user.interface"
 
 export interface ICourse {
@@ -10,7 +9,7 @@ export interface ICourse {
     endTime: string
   }[]
   students: {
-    studentInfo: ObjectId | IStudent
+    studentInfo: string | IStudent
     schoolGrades: {
       firstTrimester: number
       secondTrimester: number
@@ -21,5 +20,5 @@ export interface ICourse {
       thirdDoOver: number
     }
   }[]
-  professor: ObjectId | IProfessor
+  professor: string | IProfessor
 }
