@@ -18,8 +18,6 @@ export const createAuthority = async (req: Request, res: Response) => {
   const authorityDTO = req.body as IUser
 
   try {
-    authorityDTO.password = encrypt(authorityDTO.password)
-    authorityDTO.role = AvailableRoles.authority
     const authorityExists = await Authority.findOne({ id: authorityDTO.id })
 
     if (authorityExists) {
@@ -30,6 +28,7 @@ export const createAuthority = async (req: Request, res: Response) => {
         },
       })
     }
+    authorityDTO.role = AvailableRoles.authority
     authorityDTO.password = encrypt(authorityDTO.password)
     const authorityDoc = new Authority({
       ...authorityDTO,
@@ -64,8 +63,6 @@ export const createPersonal = async (req: Request, res: Response) => {
   const personalDTO = req.body as IUser
 
   try {
-    personalDTO.password = encrypt(personalDTO.password)
-    personalDTO.role = AvailableRoles.personal
     const personalExists = await Personal.findOne({ id: personalDTO.id })
 
     if (personalExists) {
@@ -76,6 +73,7 @@ export const createPersonal = async (req: Request, res: Response) => {
         },
       })
     }
+    personalDTO.role = AvailableRoles.personal
     personalDTO.password = encrypt(personalDTO.password)
     const personalDoc = new Personal({ ...personalDTO, _id: personalDTO.id })
     await personalDoc.save()
